@@ -1,49 +1,33 @@
 <?php
 /**
- * Genesis Sample.
+ * Cam Beta 01.
  *
- * This file adds functions to the Genesis Sample Theme.
+ * This file adds functions to the Cam Beta 01 Theme.
  *
- * @package Genesis Sample
- * @author  StudioPress
+ * @package CameraSki
+ * @since   1.0.0
+ * @author  Carles Goodvalley
  * @license GPL-2.0+
- * @link    http://www.studiopress.com/
+ * @link    https://cameraski.com/
  */
 
-// Start the engine.
+namespace CameraSki;
+
+/**********
+ * INIT
+ *********/
+
+// Start our Child Theme
+include_once( 'lib/init.php' );
+
+// Start the Genesis framework.
 include_once( get_template_directory() . '/lib/init.php' );
 
-// Setup Theme.
-include_once( get_stylesheet_directory() . '/lib/theme-defaults.php' );
+include_once ( 'lib/functions/autoload.php' );
 
-// Set Localization (do not remove).
-add_action( 'after_setup_theme', 'genesis_sample_localization_setup' );
-function genesis_sample_localization_setup(){
-	load_child_theme_textdomain( 'genesis-sample', get_stylesheet_directory() . '/languages' );
-}
-
-// Add the helper functions.
-include_once( get_stylesheet_directory() . '/lib/helper-functions.php' );
-
-// Add Image upload and Color select to WordPress Theme Customizer.
-require_once( get_stylesheet_directory() . '/lib/customize.php' );
-
-// Include Customizer CSS.
-include_once( get_stylesheet_directory() . '/lib/output.php' );
-
-// Add WooCommerce support.
-include_once( get_stylesheet_directory() . '/lib/woocommerce/woocommerce-setup.php' );
-
-// Add the required WooCommerce styles and Customizer CSS.
-include_once( get_stylesheet_directory() . '/lib/woocommerce/woocommerce-output.php' );
-
-// Add the Genesis Connect WooCommerce notice.
-include_once( get_stylesheet_directory() . '/lib/woocommerce/woocommerce-notice.php' );
-
-// Child theme (do not remove).
-define( 'CHILD_THEME_NAME', 'Genesis Sample' );
-define( 'CHILD_THEME_URL', 'http://www.studiopress.com/' );
-define( 'CHILD_THEME_VERSION', '2.3.1' );
+/**********
+ * ASSETS
+ *********/
 
 // Enqueue Scripts and Styles.
 add_action( 'wp_enqueue_scripts', 'genesis_sample_enqueue_scripts_styles' );
@@ -66,9 +50,9 @@ function genesis_sample_enqueue_scripts_styles() {
 function genesis_sample_responsive_menu_settings() {
 
 	$settings = array(
-		'mainMenu'          => __( 'Menu', 'genesis-sample' ),
+		'mainMenu'          => __( 'Menu', CHILD_TEXT_DOMAIN ),
 		'menuIconClass'     => 'dashicons-before dashicons-menu',
-		'subMenu'           => __( 'Submenu', 'genesis-sample' ),
+		'subMenu'           => __( 'Submenu', CHILD_TEXT_DOMAIN ),
 		'subMenuIconsClass' => 'dashicons-before dashicons-arrow-down-alt2',
 		'menuClasses'       => array(
 			'combine' => array(
@@ -83,38 +67,13 @@ function genesis_sample_responsive_menu_settings() {
 
 }
 
-// Add HTML5 markup structure.
-add_theme_support( 'html5', array( 'caption', 'comment-form', 'comment-list', 'gallery', 'search-form' ) );
+/**********
+ * SETUP
+ *********/
 
-// Add Accessibility support.
-add_theme_support( 'genesis-accessibility', array( '404-page', 'drop-down-menu', 'headings', 'rems', 'search-form', 'skip-links' ) );
-
-// Add viewport meta tag for mobile browsers.
-add_theme_support( 'genesis-responsive-viewport' );
-
-// Add support for custom header.
-add_theme_support( 'custom-header', array(
-	'width'           => 600,
-	'height'          => 160,
-	'header-selector' => '.site-title a',
-	'header-text'     => false,
-	'flex-height'     => true,
-) );
-
-// Add support for custom background.
-add_theme_support( 'custom-background' );
-
-// Add support for after entry widget.
-add_theme_support( 'genesis-after-entry-widget-area' );
-
-// Add support for 3-column footer widgets.
-add_theme_support( 'genesis-footer-widgets', 3 );
-
-// Add Image Sizes.
-add_image_size( 'featured-image', 720, 400, TRUE );
-
-// Rename primary and secondary navigation menus.
-add_theme_support( 'genesis-menus', array( 'primary' => __( 'After Header Menu', 'genesis-sample' ), 'secondary' => __( 'Footer Menu', 'genesis-sample' ) ) );
+/**********
+ * STRUCTURE/MENU
+ *********/
 
 // Reposition the secondary navigation menu.
 remove_action( 'genesis_after_header', 'genesis_do_subnav' );
@@ -134,11 +93,21 @@ function genesis_sample_secondary_menu_args( $args ) {
 
 }
 
+/**********
+ * STRUCTURE/POSTS
+ *********/
+
 // Modify size of the Gravatar in the author box.
 add_filter( 'genesis_author_box_gravatar_size', 'genesis_sample_author_box_gravatar' );
 function genesis_sample_author_box_gravatar( $size ) {
+
 	return 90;
+
 }
+
+/**********
+ * STRUCTURE/COMMENTS
+ *********/
 
 // Modify size of the Gravatar in the entry comments.
 add_filter( 'genesis_comment_list_args', 'genesis_sample_comments_gravatar' );
