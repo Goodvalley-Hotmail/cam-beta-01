@@ -1,32 +1,35 @@
 <?php
 /**
- * Genesis Sample.
+ * Adds the CSS from the Customizer options.
  *
- * This file adds the required CSS to the front end to the Genesis Sample Theme.
- *
- * @package Genesis Sample
- * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://www.studiopress.com/
+ * @package     CameraSki\Customizer
+ * @since       1.0.0
+ * @author      Carles Goodvalley
+ * @link        https://cameraski.com
+ * @license     GNU General Public License 2.0+
  */
 
-add_action( 'wp_enqueue_scripts', 'genesis_sample_css' );
+namespace CameraSki\Customizer;
+
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\build_inline_css_from_customizer_settings' );
 /**
 * Checks the settings for the link color, and accent color.
 * If any of these value are set the appropriate CSS is output.
 *
 * @since 2.2.3
 */
-function genesis_sample_css() {
+function build_inline_css_from_customizer_settings() {
+
+	$prefix = get_settings_prefix();
 
 	$handle  = defined( 'CHILD_THEME_NAME' ) && CHILD_THEME_NAME ? sanitize_title_with_dashes( CHILD_THEME_NAME ) : 'child-theme';
 
-	$color_link = get_theme_mod( 'genesis_sample_link_color', genesis_sample_customizer_get_default_link_color() );
-	$color_accent = get_theme_mod( 'genesis_sample_accent_color', genesis_sample_customizer_get_default_accent_color() );
+	$color_link     = get_theme_mod( $prefix . '_link_color', get_default_link_color() );
+	$color_accent   = get_theme_mod( $prefix . '_accent_color', get_default_accent_color() );
 
 	$css = '';
 
-	$css .= ( genesis_sample_customizer_get_default_link_color() !== $color_link ) ? sprintf( '
+	$css .= ( get_default_link_color() !== $color_link ) ? sprintf( '
 
 		a,
 		.entry-title a:focus,
@@ -45,7 +48,7 @@ function genesis_sample_css() {
 
 		', $color_link ) : '';
 
-	$css .= ( genesis_sample_customizer_get_default_accent_color() !== $color_accent ) ? sprintf( '
+	$css .= ( get_default_accent_color() !== $color_accent ) ? sprintf( '
 
 		button:focus,
 		button:hover,
@@ -68,7 +71,7 @@ function genesis_sample_css() {
 			background-color: %s;
 			color: %s;
 		}
-		', $color_accent, genesis_sample_color_contrast( $color_accent ) ) : '';
+		', $color_accent, calculate_color_contrast( $color_accent ) ) : '';
 
 	if ( $css ) {
 		wp_add_inline_style( $handle, $css );

@@ -1,14 +1,28 @@
 <?php
 /**
- * Genesis Sample.
+ * Customizer helpers.
  *
- * This file adds the required helper functions used in the Genesis Sample Theme.
- *
- * @package Genesis Sample
- * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://www.studiopress.com/
+ * @package     CameraSki\Customizer
+ * @since       1.0.0
+ * @author      Carles Goodvalley
+ * @link        https://cameraski.com
+ * @license     GNU General Public License 2.0+
  */
+
+namespace CameraSki\Customizer;
+
+/**
+ * Get the settings prefix.
+ *
+ * @since   1.0.0
+ *
+ * @return string
+ */
+function get_settings_prefix() {
+
+	return 'cameraski';
+
+}
 
 /**
  * Get default link color for Customizer.
@@ -18,7 +32,7 @@
  *
  * @return string Hex color code for link color.
  */
-function genesis_sample_customizer_get_default_link_color() {
+function get_default_link_color() {
 	return '#c3251d';
 }
 
@@ -30,7 +44,7 @@ function genesis_sample_customizer_get_default_link_color() {
  *
  * @return string Hex color code for accent color.
  */
-function genesis_sample_customizer_get_default_accent_color() {
+function get_default_accent_color() {
 	return '#c3251d';
 }
 
@@ -41,7 +55,7 @@ function genesis_sample_customizer_get_default_accent_color() {
  *
  * @return string Hex color code for contrast color
  */
-function genesis_sample_color_contrast( $color ) {
+function calculate_color_contrast( $color ) {
 
 	$hexcolor = str_replace( '#', '', $color );
 	$red      = hexdec( substr( $hexcolor, 0, 2 ) );
@@ -61,7 +75,7 @@ function genesis_sample_color_contrast( $color ) {
  *
  * @return string Hex color code for the color brightness
  */
-function genesis_sample_color_brightness( $color, $change ) {
+function calculate_color_brightness( $color, $change ) {
 
 	$hexcolor = str_replace( '#', '', $color );
 
